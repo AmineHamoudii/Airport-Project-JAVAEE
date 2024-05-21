@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Clients</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Liste des Clients</h1>
+
+    <!-- Formulaire de recherche -->
+    <form th:action="@{/listClient}" method="get" class="form-inline mb-4">
+        <input type="text" name="search" th:value="${keyword}" class="form-control mr-2" placeholder="Rechercher">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+
+    <!-- Tableau des clients -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Âge</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client : ${listClients}">
+            <td th:text="${client.id}">ID</td>
+            <td th:text="${client.nom}">Nom</td>
+            <td th:text="${client.prenom}">Prénom</td>
+            <td th:text="${client.age}">Âge</td>
+            <td>
+                <a th:href="@{/editClient(id=${client.id})}" class="btn btn-warning btn-sm">Éditer</a>
+                <a th:href="@{/deleteClient(id=${client.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Voulez-vous vraiment supprimer ce client ?')">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/listClient(page=${currentPage - 1}, search=${keyword})}">Précédent</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, pages.length - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/listClient(page=${i}, search=${keyword})}"
+                   th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == pages.length - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/listClient(page=${currentPage + 1}, search=${keyword})}">Suivant</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Script Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

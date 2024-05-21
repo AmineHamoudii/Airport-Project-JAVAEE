@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirmation de Suppression</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">Confirmation de Suppression</h2>
+    <p>Êtes-vous sûr de vouloir supprimer ce client ?</p>
+    <form th:action="@{/deleteClient}" method="post">
+        <input type="hidden" name="id" th:value="${id}" />
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <a href="/listClient" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+
+<!-- Script Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
